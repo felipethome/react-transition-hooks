@@ -1,0 +1,69 @@
+{
+  "name": "react-transition-hooks",
+  "version": "0.2.3",
+  "author": "Felipe Thomé",
+  "description": "React Transition Group, but better.",
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/felipethome/react-inline-transition-group",
+  "homepage": "http://felipethome.github.io/react-inline-transition-group",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-transition-group",
+    "react-addons-transition-group",
+    "react-animation"
+  ],
+  "peerDependencies": {
+    "react": "0.14.x || 15.x"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-eslint": "^6.0.4",
+    "babel-jest": "^13.0.0",
+    "babel-plugin-transform-class-properties": "^6.10.2",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.11.0",
+    "babelify": "~7.2.0",
+    "browserify": "^13.0.1",
+    "enzyme": "^2.3.0",
+    "eslint": "^2.9.0",
+    "eslint-plugin-react": "^5.1.1",
+    "fbjs": "^0.8.3",
+    "gulp": "^3.9.1",
+    "gulp-connect": "~2.2.0",
+    "gulp-if": "^2.0.1",
+    "gulp-notify": "~2.2.0",
+    "gulp-streamify": "~1.0.2",
+    "gulp-uglify": "^1.5.3",
+    "gulp-util": "~3.0.7",
+    "jest-cli": "^13.0.0",
+    "react": "^15.1.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-addons-transition-group": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "vinyl-source-stream": "~1.1.0",
+    "watchify": "~3.6.0"
+  },
+  "scripts": {
+    "build": "babel ./src --out-dir ./lib --ignore __tests__",
+    "demo": "gulp demo",
+    "lint": "eslint src/",
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "testFileExtensions": [
+      "js"
+    ],
+    "testPathDirs": [
+      "<rootDir>/src"
+    ],
+    "unmockedModulePathPatterns": [
+      "react",
+      "react-dom",
+      "enzyme"
+    ]
+  }
+}

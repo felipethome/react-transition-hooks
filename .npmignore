@@ -1,0 +1,8 @@
+*.log
+node_modules
+src
+demo
+build
+.babelrc
+.eslintrc
+gulpfile.js
