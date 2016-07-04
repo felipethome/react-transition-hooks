@@ -1,5 +1,5 @@
 var React = require('react');
-var makeCancelable = require('./makeCancelable');
+var CallbackStore = require('./CallbackStore');
 
 var TransitionGroup = React.createClass({
   displayName: 'TransitionGroup',
@@ -23,13 +23,16 @@ var TransitionGroup = React.createClass({
   },
 
   componentWillMount: function () {
-    this._callbacks = {};
     this._components = {};
     this._prevLeavingChildren = {};
   },
 
   componentDidMount: function () {
     this._performAppear();
+  },
+
+  componentWillUnmount: function () {
+    CallbackStore.cancelAll();
   },
 
   componentWillReceiveProps: function (nextProps) {
@@ -48,20 +51,13 @@ var TransitionGroup = React.createClass({
     this._performLeave(currentChildren, nextChildren);
   },
 
-  _cancelCallback: function (key) {
-    if (this._callbacks[key]) {
-      this._callbacks[key].cancel();
-      delete this._callbacks[key];
-    }
-  },
-
   _triggerInitialHook: function (initialHook, callbackFactory, key) {
-    this._cancelCallback(key);
+    // Cancel the callback of the previous animation
+    CallbackStore.cancel(key);
 
     var callback = callbackFactory(key);
 
     if (initialHook) {
-      this._callbacks[key] = callback;
       initialHook(callback);
     }
     else {
@@ -83,13 +79,12 @@ var TransitionGroup = React.createClass({
     var component = this._components[key];
 
     var callback = function () {
-      this._cancelCallback(key);
       if (component.componentDidAppear) {
         component.componentDidAppear();
       }
     };
 
-    return makeCancelable(callback, this);
+    return CallbackStore.make(callback, key, this);
   },
 
   _performEnter: function (currentChildren, nextChildren) {
@@ -127,13 +122,12 @@ var TransitionGroup = React.createClass({
     var component = this._components[key];
 
     var callback = function () {
-      this._cancelCallback(key);
       if (component.componentDidEnter) {
         component.componentDidEnter();
       }
     };
 
-    return makeCancelable(callback, this);
+    return CallbackStore.make(callback, key, this);
   },
 
   _performLeave: function (currentChildren, nextChildren) {
@@ -162,8 +156,6 @@ var TransitionGroup = React.createClass({
     var component = this._components[key];
 
     var callback = function () {
-      this._cancelCallback(key);
-
       // Mark the child leaving process as complete
       if (this._prevLeavingChildren[key]) {
         delete this._prevLeavingChildren[key];
@@ -186,7 +178,7 @@ var TransitionGroup = React.createClass({
       });
     };
 
-    return makeCancelable(callback, this);
+    return CallbackStore.make(callback, key, this);
   },
 
   _storeComponent: function (key, component) {
