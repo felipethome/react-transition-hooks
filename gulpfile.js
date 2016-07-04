@@ -16,6 +16,7 @@ var files = {
   dependencies: [
     'react',
     'react-dom',
+    'react-addons-transition-group',
   ],
 
   browserify: [

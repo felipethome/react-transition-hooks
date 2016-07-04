@@ -1,44 +1,38 @@
-var CallbackStore = (function () {
+function CallbackStore() {
+  this._callbackStore = {};
+}
 
-  var callbackStore = {};
+CallbackStore.prototype.make = function (callback, key, context) {
+  var instance = this;
 
-  var makeCancelable = function (callback, key, context) {
-    var cancelableFunction = function () {
-      if (!key || !callback || typeof callback !== 'function') return;
-      callback.apply(context, arguments);
+  var cancelableFunction = function () {
+    if (!key || !callback || typeof callback !== 'function') return;
+    callback.apply(context, arguments);
 
-      // Make it executable just one
-      cancelCallback(key);
-    };
-
-    cancelableFunction.cancel = function () {
-      delete callbackStore[key];
-      callback = null;
-      context = null;
-      key = null;
-    };
-
-    callbackStore[key] = cancelableFunction;
-
-    return cancelableFunction;
+    // Make it executable just one
+    instance.cancel(key);
   };
 
-  var cancelCallback = function (key) {
-    if (callbackStore[key]) callbackStore[key].cancel();
+  cancelableFunction.cancel = function () {
+    delete instance._callbackStore[key];
+    callback = null;
+    context = null;
+    key = null;
   };
 
-  var cancelAllCallbacks = function () {
-    Object.keys(callbackStore).forEach(function (key) {
-      callbackStore[key].cancel();
-    });
-  };
+  instance._callbackStore[key] = cancelableFunction;
 
-  return {
-    make: makeCancelable,
-    cancel: cancelCallback,
-    cancelAll: cancelAllCallbacks,
-  };
+  return cancelableFunction;
+};
 
-})();
+CallbackStore.prototype.cancel = function (key) {
+  if (this._callbackStore[key]) this._callbackStore[key].cancel();
+};
+
+CallbackStore.prototype.cancelAll = function () {
+  Object.keys(this._callbackStore).forEach(function (key) {
+    this._callbackStore[key].cancel();
+  });
+};
 
 module.exports = CallbackStore;

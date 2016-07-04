@@ -25,6 +25,7 @@ var TransitionGroup = React.createClass({
   componentWillMount: function () {
     this._components = {};
     this._prevLeavingChildren = {};
+    this._CallbackStore = new CallbackStore();
   },
 
   componentDidMount: function () {
@@ -48,12 +49,12 @@ var TransitionGroup = React.createClass({
   },
 
   componentWillUnmount: function () {
-    CallbackStore.cancelAll();
+    this._CallbackStore.cancelAll();
   },
 
   _triggerInitialHook: function (initialHook, callbackFactory, key) {
     // Cancel the callback of the previous animation
-    CallbackStore.cancel(key);
+    this._CallbackStore.cancel(key);
 
     var callback = callbackFactory(key);
 
@@ -84,7 +85,7 @@ var TransitionGroup = React.createClass({
       }
     };
 
-    return CallbackStore.make(callback, key, this);
+    return this._CallbackStore.make(callback, key, this);
   },
 
   _performEnter: function (currentChildren, nextChildren) {
@@ -127,7 +128,7 @@ var TransitionGroup = React.createClass({
       }
     };
 
-    return CallbackStore.make(callback, key, this);
+    return this._CallbackStore.make(callback, key, this);
   },
 
   _performLeave: function (currentChildren, nextChildren) {
@@ -178,7 +179,7 @@ var TransitionGroup = React.createClass({
       });
     };
 
-    return CallbackStore.make(callback, key, this);
+    return this._CallbackStore.make(callback, key, this);
   },
 
   _storeComponent: function (key, component) {
