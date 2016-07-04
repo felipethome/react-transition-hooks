@@ -19,7 +19,7 @@ var files = {
   ],
 
   browserify: [
-    './demo/main.js',
+    './demo/app/main.js',
   ],
 };
 
