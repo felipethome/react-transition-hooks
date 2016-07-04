@@ -28,7 +28,7 @@ This component uses the same API names of ReactTransitionGroup.
 
 Property name | Description
 ------------ | -------------
-component | The component that will wrap all the children. Default: div
+component | The component that will wrap all the children. Default: span
 
 ## LICENSE
 
