@@ -4,8 +4,7 @@ module.exports = function(callback, context) {
     callback.apply(context, arguments);
 
     // Make it executable just one
-    callback = null;
-    context = null;
+    cancelableFunction.cancel();
   };
 
   cancelableFunction.cancel = function () {

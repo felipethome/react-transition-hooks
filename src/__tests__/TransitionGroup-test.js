@@ -314,9 +314,9 @@ describe('TransitionGroup', function () {
     log = [];
     instance.setState({count: 0});
     expect(log).toEqual([
-      'willLeave2', 'willLeave1', 'willLeave0',
+      'willLeave0', 'willLeave1', 'willLeave2',
       'willUnmount0', 'willUnmount1', 'willUnmount2',
-      'didLeave2', 'didLeave1', 'didLeave0',
+      'didLeave0', 'didLeave1', 'didLeave2',
     ]);
   });
 
