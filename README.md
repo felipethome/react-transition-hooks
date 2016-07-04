@@ -1,6 +1,6 @@
 # React Transition Hooks
 
-The goal of this component is supply a better alternative to ReactTransitionGroup. Why? Because, ReactTransitionGroup animations can not be interrupted. So, if you are with an animation going on and you want to interrupt it and begin another one you will need to wait until the current animation finishes. Plus, Facebook will drop support for ReactTransitionGroup soon.
+The goal of this component is supply a better alternative to [ReactTransitionGroup](https://facebook.github.io/react/docs/animation.html). Why? Because, ReactTransitionGroup animations can not be interrupted. So, if you are with a component entering the group it can not leave until the entering phase is complete. Plus, Facebook will drop support for ReactTransitionGroup soon.
 
 If you have a component currently using ReactTransitionGroup you can just change your import with this component and everything should work as expected.
 
@@ -10,17 +10,19 @@ If you have a component currently using ReactTransitionGroup you can just change
 
 ## Hooks
 
-- **componentWillAppear**:
+This component uses the same API names of ReactTransitionGroup. 
 
-- **componentDidAppear**:
+- **componentWillAppear(callback)**: Called right after componentDidMount. This is called for the children inside the group for the first render. After the first render this will never be called again.
 
-- **componentWillEnter**:
+- **componentDidAppear()**: Called when the callback passed to componentWillAppear is called.
 
-- **componentDidEnter**:
+- **componentWillEnter(callback)**: Called when a component just entered the group.
 
-- **componentWillLeave**:
+- **componentDidEnter()**: Called when the callback passed to componentWillEnter is called.
 
-- **componentDidLeave**:
+- **componentWillLeave(callback)**: Called when a component is leaving the group.
+
+- **componentDidLeave()**: Called when the callback passed to componentWillLeave is called. This is called right after componentWillUnmount.
 
 ## Properties
 
