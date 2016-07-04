@@ -11,7 +11,7 @@ var TransitionGroup = React.createClass({
 
   getDefaultProps: function () {
     return {
-      component: 'div',
+      component: 'span',
     };
   },
 
@@ -25,6 +25,7 @@ var TransitionGroup = React.createClass({
   componentWillMount: function () {
     this._callbacks = {};
     this._components = {};
+    this._prevLeavingChildren = {};
   },
 
   componentDidMount: function () {
@@ -34,7 +35,6 @@ var TransitionGroup = React.createClass({
   componentWillReceiveProps: function (nextProps) {
     var currentChildren = {};
     var nextChildren = {};
-    var leavingChildren = {};
 
     this.state.children.forEach(function (prevChild) {
       currentChildren[prevChild.key] = prevChild;
@@ -101,7 +101,7 @@ var TransitionGroup = React.createClass({
       Object.keys(nextChildren).forEach(function (key, i) {
         if (typeof currentChildren[key] === 'undefined') {
           // In case the child was leaving, but now is entering
-          if (this._prevLeavingChildren && this._prevLeavingChildren[key]) {
+          if (this._prevLeavingChildren[key]) {
             delete this._prevLeavingChildren;
           }
           newChildren.splice(i, 0, nextChildren[key]);
@@ -141,7 +141,7 @@ var TransitionGroup = React.createClass({
     
     Object.keys(currentChildren).forEach(function (key) {
       if (typeof nextChildren[key] === 'undefined') {
-        if (!this._prevLeavingChildren || !this._prevLeavingChildren[key]) {
+        if (!this._prevLeavingChildren[key]) {
           this._triggerInitialHook(
             this._components[key].componentWillLeave,
             this._doneLeavingCallbackFactory,
@@ -163,7 +163,9 @@ var TransitionGroup = React.createClass({
 
     var callback = function () {
       this._cancelCallback(key);
-      if (this._prevLeavingChildren && this._prevLeavingChildren[key]) {
+
+      // Mark the child leaving process as complete
+      if (this._prevLeavingChildren[key]) {
         delete this._prevLeavingChildren[key];
       }
 
