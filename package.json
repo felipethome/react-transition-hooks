@@ -2,17 +2,17 @@
   "name": "react-transition-hooks",
   "version": "1.0.0",
   "author": "Felipe Thomé",
-  "description": "React Transition Group, but better.",
+  "description": "Like React Transition Group, but better.",
   "license": "BSD-3-Clause",
   "repository": "https://github.com/felipethome/react-inline-transition-group",
   "homepage": "http://felipethome.github.io/react-inline-transition-group",
   "keywords": [
     "react",
     "react-component",
+    "react-animation",
     "react-addons",
     "transition-group",
-    "css-transition-group",
-    "react-animation"
+    "css-transition-group"
   ],
   "peerDependencies": {
     "react": "0.14.x || 15.x"

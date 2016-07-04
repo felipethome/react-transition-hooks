@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactTransitionGroup = require('react-addons-transition-group');
-var TransitionGroup = require('../../src/TransitionGroup');
+var TransitionGroup = require('../../src/TransitionHooks');
 var TransitionChild = require('./TransitionChild');
 
 var Transition = React.createClass({
