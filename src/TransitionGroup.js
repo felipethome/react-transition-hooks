@@ -87,7 +87,7 @@ var TransitionGroup = React.createClass({
     this._cancelCallback(key);
 
     var component = this._components[key];
-    var callback = this._handleDoneAppearing(key);
+    var callback = this._createAppearCallback(key);
 
     if (component.componentWillAppear) {
       this._callbacks[key] = callback;
@@ -98,7 +98,7 @@ var TransitionGroup = React.createClass({
     }
   },
 
-  _handleDoneAppearing: function (key) {
+  _createAppearCallback: function (key) {
     var component = this._components[key];
 
     var callback = function () {
@@ -123,7 +123,7 @@ var TransitionGroup = React.createClass({
       };
     }, function () {
       var component = this._components[key];
-      var callback = this._handleDoneEntering(key);
+      var callback = this._createEnterCallback(key);
 
       if (component.componentWillEnter) {
         this._callbacks[key] = callback;
@@ -135,7 +135,7 @@ var TransitionGroup = React.createClass({
     });
   },
 
-  _handleDoneEntering: function (key) {
+  _createEnterCallback: function (key) {
     var component = this._components[key];
 
     var callback = function () {
@@ -152,7 +152,7 @@ var TransitionGroup = React.createClass({
     this._cancelCallback(key);
 
     var component = this._components[key];
-    var callback = this._handleDoneLeaving(key, position);
+    var callback = this._createLeaveCallback(key, position);
 
     if (component.componentWillLeave) {
       this._callbacks[key] = callback;
@@ -163,7 +163,7 @@ var TransitionGroup = React.createClass({
     }
   },
 
-  _handleDoneLeaving: function (key, position) {
+  _createLeaveCallback: function (key, position) {
     var component = this._components[key];
 
     var callback = function () {
