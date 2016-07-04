@@ -31,10 +31,6 @@ var TransitionGroup = React.createClass({
     this._performAppear();
   },
 
-  componentWillUnmount: function () {
-    CallbackStore.cancelAll();
-  },
-
   componentWillReceiveProps: function (nextProps) {
     var currentChildren = {};
     var nextChildren = {};
@@ -49,6 +45,10 @@ var TransitionGroup = React.createClass({
 
     this._performEnter(currentChildren, nextChildren);
     this._performLeave(currentChildren, nextChildren);
+  },
+
+  componentWillUnmount: function () {
+    CallbackStore.cancelAll();
   },
 
   _triggerInitialHook: function (initialHook, callbackFactory, key) {
@@ -132,7 +132,7 @@ var TransitionGroup = React.createClass({
 
   _performLeave: function (currentChildren, nextChildren) {
     var leavingChildren = {};
-    
+
     Object.keys(currentChildren).forEach(function (key) {
       if (typeof nextChildren[key] === 'undefined') {
         if (!this._prevLeavingChildren[key]) {
