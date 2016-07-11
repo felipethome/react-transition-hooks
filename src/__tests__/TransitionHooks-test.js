@@ -1,10 +1,10 @@
 /* eslint-disable react/no-multi-comp, react/prop-types */
 
+jest.unmock('../TransitionHooks');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
-var TransitionGroup = require('../TransitionGroup');
-
-jest.unmock('../TransitionGroup');
+var TransitionGroup = require('../TransitionHooks');
 
 describe('TransitionGroup', function () {
 
@@ -317,6 +317,63 @@ describe('TransitionGroup', function () {
       'willLeave0', 'willLeave1', 'willLeave2',
       'willUnmount0', 'willUnmount1', 'willUnmount2',
       'didLeave0', 'didLeave1', 'didLeave2',
+    ]);
+  });
+
+  it('should handle enter and leave at the same time correctly', function () {
+    var log = [];
+
+    var Child = React.createClass({
+      componentDidMount: function () {
+        log.push('didMount' + this.props.id);
+      },
+      componentWillUnmount: function () {
+        log.push('willUnmount' + this.props.id);
+      },
+      componentWillEnter: function (cb) {
+        log.push('willEnter' + this.props.id);
+        cb();
+      },
+      componentDidEnter: function () {
+        log.push('didEnter' + this.props.id);
+      },
+      componentWillLeave: function (cb) {
+        log.push('willLeave' + this.props.id);
+        cb();
+      },
+      componentDidLeave: function () {
+        log.push('didLeave' + this.props.id);
+      },
+      render: function () {
+        return <span />;
+      },
+    });
+
+    var Component = React.createClass({
+      getInitialState: function () {
+        return {elements: [0]};
+      },
+      render: function () {
+        var children = [];
+        for (var i = 0; i < this.state.elements.length; i++) {
+          children.push(
+            <Child key={this.state.elements[i]} id={this.state.elements[i]} />
+          );
+        }
+        return <TransitionGroup>{children}</TransitionGroup>;
+      },
+    });
+
+    var container = document.createElement('div');
+    var instance = ReactDOM.render(<Component />, container);
+
+    expect(log).toEqual(['didMount0']);
+
+    log = [];
+    instance.setState({elements: [1]});
+    expect(log).toEqual([
+      'didMount1', 'willEnter1', 'didEnter1',
+      'willLeave0', 'willUnmount0', 'didLeave0',
     ]);
   });
 

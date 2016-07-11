@@ -17,10 +17,11 @@ var files = {
     'react',
     'react-dom',
     'react-addons-transition-group',
+    'react-addons-css-transition-group',
   ],
 
   browserify: [
-    './demo/app/main.js',
+    './demo/main.js',
   ],
 };
 

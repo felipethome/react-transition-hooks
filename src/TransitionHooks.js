@@ -45,7 +45,6 @@ var TransitionGroup = React.createClass({
     });
 
     this._performEnter(currentChildren, nextChildren);
-    this._performLeave(currentChildren, nextChildren);
   },
 
   componentWillUnmount: function () {
@@ -116,6 +115,8 @@ var TransitionGroup = React.createClass({
           key
         );
       }, this);
+
+      this._performLeave(currentChildren, nextChildren);
     });
   },
 
