@@ -32,7 +32,7 @@ CallbackStore.prototype.cancel = function (key) {
 CallbackStore.prototype.cancelAll = function () {
   Object.keys(this._callbackStore).forEach(function (key) {
     this._callbackStore[key].cancel();
-  });
+  }, this);
 };
 
 module.exports = CallbackStore;

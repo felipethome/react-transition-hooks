@@ -1,7 +1,7 @@
-*.log
-node_modules
-src
-demo
 .babelrc
 .eslintrc
+*.log
+demo
 gulpfile.js
+node_modules
+src

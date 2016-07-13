@@ -351,7 +351,7 @@ describe('TransitionGroup', function () {
 
     var Component = React.createClass({
       getInitialState: function () {
-        return {elements: [0]};
+        return {elements: [0, 1]};
       },
       render: function () {
         var children = [];
@@ -367,13 +367,15 @@ describe('TransitionGroup', function () {
     var container = document.createElement('div');
     var instance = ReactDOM.render(<Component />, container);
 
-    expect(log).toEqual(['didMount0']);
+    expect(log).toEqual(['didMount0', 'didMount1']);
 
     log = [];
-    instance.setState({elements: [1]});
+    instance.setState({elements: [2]});
     expect(log).toEqual([
-      'didMount1', 'willEnter1', 'didEnter1',
-      'willLeave0', 'willUnmount0', 'didLeave0',
+      'didMount2', 'willEnter2', 'didEnter2',
+      'willLeave0', 'willLeave1',
+      'willUnmount0', 'willUnmount1',
+      'didLeave0', 'didLeave1',
     ]);
   });
 
