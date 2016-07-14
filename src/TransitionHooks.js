@@ -36,12 +36,24 @@ var TransitionGroup = React.createClass({
     var currentChildren = {};
     var nextChildren = {};
 
-    this.state.children.forEach(function (prevChild) {
-      currentChildren[prevChild.key] = prevChild;
-    });
-
     React.Children.toArray(nextProps.children).forEach(function (nextChild) {
       nextChildren[nextChild.key] = nextChild;
+    });
+
+    var newChildren = [];
+    this.state.children.forEach(function (prevChild) {
+      currentChildren[prevChild.key] = prevChild;
+
+      if (nextChildren[prevChild.key]) {
+        newChildren.push(nextChildren[prevChild.key]);
+      }
+      else {
+        newChildren.push(prevChild);
+      }
+    });
+
+    this.setState({
+      children: newChildren,
     });
 
     this._performEnter(currentChildren, nextChildren);
