@@ -4,7 +4,7 @@ The goal of this component is supply a better alternative to [ReactTransitionGro
 
 If you have a component currently using ReactTransitionGroup you can just change your import with this component and everything should work as expected.
 
-[Demo](http://felipethome.github.io/react-inline-transition-group/demo/index.html)
+[Demo using ReactInlineTransitionGroup](http://felipethome.github.io/react-inline-transition-group/demo/index.html)
 
 # How to install
 
