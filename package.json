@@ -4,7 +4,7 @@
   "author": "Felipe Thomé",
   "description": "Like React Transition Group, but better.",
   "license": "BSD-3-Clause",
-  "repository": "https://github.com/felipethome/react-inline-transition-group",
+  "repository": "https://github.com/felipethome/react-transition-hooks",
   "homepage": "http://felipethome.github.io/react-inline-transition-group",
   "keywords": [
     "react",
