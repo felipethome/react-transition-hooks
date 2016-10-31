@@ -1,5 +1,6 @@
 var React = require('react');
 var CallbackStore = require('./CallbackStore');
+var findIndex = require('./findIndex');
 
 var TransitionGroup = React.createClass({
   displayName: 'TransitionGroup',
@@ -177,10 +178,10 @@ var TransitionGroup = React.createClass({
 
       this.setState(function (previousState) {
         var newChildren = previousState.children.slice();
-        var position = newChildren.findIndex(function (element) {
+        var position = findIndex(newChildren, function (element) {
           if (element.key === key) return true;
         });
-        newChildren.splice(position, 1);
+        if (position >= 0) newChildren.splice(position, 1);
 
         return {
           children: newChildren,
