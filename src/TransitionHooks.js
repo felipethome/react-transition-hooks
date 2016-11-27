@@ -101,19 +101,21 @@ var TransitionGroup = React.createClass({
   },
 
   _performEnter: function (currentChildren, nextChildren) {
-    var enteringChildrenKeys = [];
+    var enteringChildrenKeys = {};
 
     this.setState(function (previousState) {
       var newChildren = previousState.children.slice();
 
       Object.keys(nextChildren).forEach(function (key, i) {
         if (typeof currentChildren[key] === 'undefined') {
-          // In case the child was leaving, but now is entering
-          if (this._prevLeavingChildren[key]) {
-            delete this._prevLeavingChildren;
-          }
           newChildren.splice(i, 0, nextChildren[key]);
-          enteringChildrenKeys.push(key);
+          enteringChildrenKeys[key] = true;
+        }
+
+        // In case the child was leaving, but now is entering
+        if (this._prevLeavingChildren[key]) {
+          delete this._prevLeavingChildren;
+          enteringChildrenKeys[key] = true;
         }
       }, this);
 
@@ -121,7 +123,7 @@ var TransitionGroup = React.createClass({
         children: newChildren,
       };
     }, function () {
-      enteringChildrenKeys.forEach(function (key) {
+      Object.keys(enteringChildrenKeys).forEach(function (key) {
         this._triggerInitialHook(
           this._components[key].componentWillEnter,
           this._doneEnteringCallbackFactory,
