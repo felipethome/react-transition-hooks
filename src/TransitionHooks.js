@@ -34,29 +34,39 @@ var TransitionGroup = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
+    // currentChildren are children that are already inside the component or,
+    // in other words, the ones in the state.
     var currentChildren = {};
+
+    // nextChildren are children that are present in the nextProps.children.
     var nextChildren = {};
 
     React.Children.toArray(nextProps.children).forEach(function (nextChild) {
       nextChildren[nextChild.key] = nextChild;
     });
 
-    var newChildren = [];
+    // updatedCurrentChildren are children that are already inside the
+    // component, but updated using the children in nextProps.children.
+    var updatedCurrentChildren = [];
+
     this.state.children.forEach(function (prevChild) {
       currentChildren[prevChild.key] = prevChild;
 
       if (nextChildren[prevChild.key]) {
-        newChildren.push(nextChildren[prevChild.key]);
+        updatedCurrentChildren.push(nextChildren[prevChild.key]);
       }
       else {
-        newChildren.push(prevChild);
+        updatedCurrentChildren.push(prevChild);
       }
     });
 
     this.setState({
-      children: newChildren,
+      children: updatedCurrentChildren,
     });
 
+    // Notice performEnter() calls performLeave(). This way I can guarantee
+    // the leaving process starts after the entering process. This is good
+    // for tests and for the user.
     this._performEnter(currentChildren, nextChildren);
   },
 
