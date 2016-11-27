@@ -1,6 +1,6 @@
 {
   "name": "react-transition-hooks",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "author": "Felipe Thomé",
   "description": "Like React Transition Group, but better.",
   "license": "BSD-3-Clause",
