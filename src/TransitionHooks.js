@@ -2,8 +2,8 @@ var React = require('react');
 var CallbackStore = require('./CallbackStore');
 var findIndex = require('./findIndex');
 
-var TransitionGroup = React.createClass({
-  displayName: 'TransitionGroup',
+var TransitionHooks = React.createClass({
+  displayName: 'TransitionHooks',
 
   propTypes: {
     children: React.PropTypes.node,
@@ -234,4 +234,4 @@ var TransitionGroup = React.createClass({
 
 });
 
-module.exports = TransitionGroup;
+module.exports = TransitionHooks;
