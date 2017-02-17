@@ -124,7 +124,7 @@ var TransitionGroup = React.createClass({
 
         // In case the child was leaving, but now is entering
         if (this._prevLeavingChildren[key]) {
-          delete this._prevLeavingChildren;
+          delete this._prevLeavingChildren[key];
           enteringChildrenKeys[key] = true;
         }
       }, this);
