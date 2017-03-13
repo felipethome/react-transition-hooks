@@ -8,7 +8,7 @@ var TransitionHooks = React.createClass({
   propTypes: {
     children: React.PropTypes.node,
     component: React.PropTypes.oneOfType([
-      React.PropTypes.node,
+      React.PropTypes.string,
       React.PropTypes.func,
     ]),
   },
