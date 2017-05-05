@@ -1,9 +1,10 @@
-/* eslint-disable react/no-multi-comp, react/prop-types */
+/* eslint-disable react/no-multi-comp, react/prop-types, react/display-name */
 
 jest.unmock('../TransitionHooks');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
 var TransitionGroup = require('../TransitionHooks');
 
 describe('TransitionGroup', function () {
@@ -11,7 +12,7 @@ describe('TransitionGroup', function () {
   it('should handle appear/leave/enter correctly', function () {
     var log = [];
 
-    var Child = React.createClass({
+    var Child = createReactClass({
       componentDidMount: function () {
         log.push('didMount');
       },
@@ -44,7 +45,7 @@ describe('TransitionGroup', function () {
       },
     });
 
-    var Component = React.createClass({
+    var Component = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -74,7 +75,7 @@ describe('TransitionGroup', function () {
   it('should handle appear/enter/leave correctly', function () {
     var log = [];
 
-    var Child = React.createClass({
+    var Child = createReactClass({
       componentDidMount: function () {
         log.push('didMount');
       },
@@ -107,7 +108,7 @@ describe('TransitionGroup', function () {
       },
     });
 
-    var Component = React.createClass({
+    var Component = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -138,7 +139,7 @@ describe('TransitionGroup', function () {
     var log = [];
     var willEnterCb;
 
-    var Child = React.createClass({
+    var Child = createReactClass({
       componentDidMount: function () {
         log.push('didMount');
       },
@@ -164,7 +165,7 @@ describe('TransitionGroup', function () {
       },
     });
 
-    var Component = React.createClass({
+    var Component = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -199,7 +200,7 @@ describe('TransitionGroup', function () {
     var log = [];
     var willEnterCb;
 
-    var Child = React.createClass({
+    var Child = createReactClass({
       componentDidMount: function () {
         log.push('didMount');
       },
@@ -225,7 +226,7 @@ describe('TransitionGroup', function () {
       },
     });
 
-    var Component = React.createClass({
+    var Component = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -259,7 +260,7 @@ describe('TransitionGroup', function () {
   it('should handle entering/leaving several elements at once', function () {
     var log = [];
 
-    var Child = React.createClass({
+    var Child = createReactClass({
       componentDidMount: function () {
         log.push('didMount' + this.props.id);
       },
@@ -285,7 +286,7 @@ describe('TransitionGroup', function () {
       },
     });
 
-    var Component = React.createClass({
+    var Component = createReactClass({
       getInitialState: function () {
         return {count: 1};
       },
@@ -323,7 +324,7 @@ describe('TransitionGroup', function () {
   it('should handle enter and leave at the same time correctly', function () {
     var log = [];
 
-    var Child = React.createClass({
+    var Child = createReactClass({
       componentDidMount: function () {
         log.push('didMount' + this.props.id);
       },
@@ -349,7 +350,7 @@ describe('TransitionGroup', function () {
       },
     });
 
-    var Component = React.createClass({
+    var Component = createReactClass({
       getInitialState: function () {
         return {elements: [0, 1]};
       },
