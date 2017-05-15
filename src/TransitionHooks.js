@@ -1,15 +1,17 @@
 var React = require('react');
+var PropTypes = require('prop-types');
+var createReactClass = require('create-react-class');
 var CallbackStore = require('./CallbackStore');
 var findIndex = require('./findIndex');
 
-var TransitionHooks = React.createClass({
+var TransitionHooks = createReactClass({
   displayName: 'TransitionHooks',
 
   propTypes: {
-    children: React.PropTypes.node,
-    component: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.func,
+    children: PropTypes.node,
+    component: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.func,
     ]),
   },
 

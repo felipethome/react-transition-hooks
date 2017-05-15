@@ -16,7 +16,10 @@
   "peerDependencies": {
     "react": "0.14.x || 15.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "create-react-class": "^15.5.2",
+    "prop-types": "^15.5.8"
+  },
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-eslint": "^6.0.4",
