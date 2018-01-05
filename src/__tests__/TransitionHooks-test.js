@@ -2,64 +2,64 @@
 
 jest.unmock('../TransitionHooks');
 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var createReactClass = require('create-react-class');
-var TransitionGroup = require('../TransitionHooks');
+const installMockRAF = require('./installMockRAF');
+installMockRAF();
+
+const React = require('react');
+const ReactDOM = require('react-dom');
+const TransitionGroup = require('../TransitionHooks');
 
 describe('TransitionGroup', function () {
-
   it('should handle appear/leave/enter correctly', function () {
-    var log = [];
+    let log = [];
 
-    var Child = createReactClass({
-      componentDidMount: function () {
+    class Child extends React.Component {
+      componentDidMount() {
         log.push('didMount');
-      },
-      componentWillUnmount: function () {
+      }
+      componentWillUnmount() {
         log.push('willUnmount');
-      },
-      componentWillAppear: function (cb) {
+      }
+      componentWillAppear(cb) {
         log.push('willAppear');
         cb();
-      },
-      componentDidAppear: function () {
+      }
+      componentDidAppear() {
         log.push('didAppear');
-      },
-      componentWillEnter: function (cb) {
+      }
+      componentWillEnter(cb) {
         log.push('willEnter');
         cb();
-      },
-      componentDidEnter: function () {
+      }
+      componentDidEnter() {
         log.push('didEnter');
-      },
-      componentWillLeave: function (cb) {
+      }
+      componentWillLeave(cb) {
         log.push('willLeave');
         cb();
-      },
-      componentDidLeave: function () {
+      }
+      componentDidLeave() {
         log.push('didLeave');
-      },
-      render: function () {
+      }
+      render() {
         return <span />;
-      },
-    });
+      }
+    }
 
-    var Component = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
-      render: function () {
-        var children = [];
-        for (var i = 0; i < this.state.count; i++) {
+    class Component extends React.Component {
+      state = {count: 1};
+
+      render() {
+        const children = [];
+        for (let i = 0; i < this.state.count; i++) {
           children.push(<Child key={i} />);
         }
         return <TransitionGroup>{children}</TransitionGroup>;
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Component />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Component />, container);
 
     expect(log).toEqual(['didMount', 'willAppear', 'didAppear']);
 
@@ -73,56 +73,55 @@ describe('TransitionGroup', function () {
   });
 
   it('should handle appear/enter/leave correctly', function () {
-    var log = [];
+    let log = [];
 
-    var Child = createReactClass({
-      componentDidMount: function () {
+    class Child extends React.Component {
+      componentDidMount() {
         log.push('didMount');
-      },
-      componentWillUnmount: function () {
+      }
+      componentWillUnmount() {
         log.push('willUnmount');
-      },
-      componentWillAppear: function (cb) {
+      }
+      componentWillAppear(cb) {
         log.push('willAppear');
         cb();
-      },
-      componentDidAppear: function () {
+      }
+      componentDidAppear() {
         log.push('didAppear');
-      },
-      componentWillEnter: function (cb) {
+      }
+      componentWillEnter(cb) {
         log.push('willEnter');
         cb();
-      },
-      componentDidEnter: function () {
+      }
+      componentDidEnter() {
         log.push('didEnter');
-      },
-      componentWillLeave: function (cb) {
+      }
+      componentWillLeave(cb) {
         log.push('willLeave');
         cb();
-      },
-      componentDidLeave: function () {
+      }
+      componentDidLeave() {
         log.push('didLeave');
-      },
-      render: function () {
+      }
+      render() {
         return <span />;
-      },
-    });
+      }
+    }
 
-    var Component = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
-      render: function () {
-        var children = [];
-        for (var i = 0; i < this.state.count; i++) {
+    class Component extends React.Component {
+      state = {count: 1};
+
+      render() {
+        const children = [];
+        for (let i = 0; i < this.state.count; i++) {
           children.push(<Child key={i} />);
         }
         return <TransitionGroup>{children}</TransitionGroup>;
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Component />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Component />, container);
 
     expect(log).toEqual(['didMount', 'willAppear', 'didAppear']);
 
@@ -136,50 +135,49 @@ describe('TransitionGroup', function () {
   });
 
   it('should handle enter/leave/enter/leave correctly', function () {
-    var log = [];
-    var willEnterCb;
+    let log = [];
+    let willEnterCb;
 
-    var Child = createReactClass({
-      componentDidMount: function () {
+    class Child extends React.Component {
+      componentDidMount() {
         log.push('didMount');
-      },
-      componentWillUnmount: function () {
+      }
+      componentWillUnmount() {
         log.push('willUnmount');
-      },
-      componentWillEnter: function (cb) {
+      }
+      componentWillEnter(cb) {
         log.push('willEnter');
         willEnterCb = cb;
-      },
-      componentDidEnter: function () {
+      }
+      componentDidEnter() {
         log.push('didEnter');
-      },
-      componentWillLeave: function (cb) {
+      }
+      componentWillLeave(cb) {
         log.push('willLeave');
         cb();
-      },
-      componentDidLeave: function () {
+      }
+      componentDidLeave() {
         log.push('didLeave');
-      },
-      render: function () {
+      }
+      render() {
         return <span />;
-      },
-    });
+      }
+    }
 
-    var Component = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
-      render: function () {
-        var children = [];
-        for (var i = 0; i < this.state.count; i++) {
+    class Component extends React.Component {
+      state = {count: 1};
+
+      render() {
+        const children = [];
+        for (let i = 0; i < this.state.count; i++) {
           children.push(<Child key={i} />);
         }
         return <TransitionGroup>{children}</TransitionGroup>;
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Component />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Component />, container);
 
     expect(log).toEqual(['didMount']);
     instance.setState({count: 2});
@@ -197,50 +195,49 @@ describe('TransitionGroup', function () {
   });
 
   it('should handle enter/leave/enter correctly', function () {
-    var log = [];
-    var willEnterCb;
+    let log = [];
+    let willEnterCb;
 
-    var Child = createReactClass({
-      componentDidMount: function () {
+    class Child extends React.Component {
+      componentDidMount() {
         log.push('didMount');
-      },
-      componentWillUnmount: function () {
+      }
+      componentWillUnmount() {
         log.push('willUnmount');
-      },
-      componentWillEnter: function (cb) {
+      }
+      componentWillEnter(cb) {
         log.push('willEnter');
         willEnterCb = cb;
-      },
-      componentDidEnter: function () {
+      }
+      componentDidEnter() {
         log.push('didEnter');
-      },
-      componentWillLeave: function (cb) {
+      }
+      componentWillLeave(cb) {
         log.push('willLeave');
         cb();
-      },
-      componentDidLeave: function () {
+      }
+      componentDidLeave() {
         log.push('didLeave');
-      },
-      render: function () {
+      }
+      render() {
         return <span />;
-      },
-    });
+      }
+    }
 
-    var Component = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
-      render: function () {
-        var children = [];
-        for (var i = 0; i < this.state.count; i++) {
+    class Component extends React.Component {
+      state = {count: 1};
+
+      render() {
+        const children = [];
+        for (let i = 0; i < this.state.count; i++) {
           children.push(<Child key={i} />);
         }
         return <TransitionGroup>{children}</TransitionGroup>;
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Component />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Component />, container);
 
     expect(log).toEqual(['didMount']);
 
@@ -258,49 +255,48 @@ describe('TransitionGroup', function () {
   });
 
   it('should handle entering/leaving several elements at once', function () {
-    var log = [];
+    let log = [];
 
-    var Child = createReactClass({
-      componentDidMount: function () {
+    class Child extends React.Component {
+      componentDidMount() {
         log.push('didMount' + this.props.id);
-      },
-      componentWillUnmount: function () {
+      }
+      componentWillUnmount() {
         log.push('willUnmount' + this.props.id);
-      },
-      componentWillEnter: function (cb) {
+      }
+      componentWillEnter = (cb) => {
         log.push('willEnter' + this.props.id);
         cb();
-      },
-      componentDidEnter: function () {
+      };
+      componentDidEnter = () => {
         log.push('didEnter' + this.props.id);
-      },
-      componentWillLeave: function (cb) {
+      };
+      componentWillLeave = (cb) => {
         log.push('willLeave' + this.props.id);
         cb();
-      },
-      componentDidLeave: function () {
+      };
+      componentDidLeave = () => {
         log.push('didLeave' + this.props.id);
-      },
-      render: function () {
+      };
+      render() {
         return <span />;
-      },
-    });
+      }
+    }
 
-    var Component = createReactClass({
-      getInitialState: function () {
-        return {count: 1};
-      },
-      render: function () {
-        var children = [];
-        for (var i = 0; i < this.state.count; i++) {
+    class Component extends React.Component {
+      state = {count: 1};
+
+      render() {
+        const children = [];
+        for (let i = 0; i < this.state.count; i++) {
           children.push(<Child key={i} id={i} />);
         }
         return <TransitionGroup>{children}</TransitionGroup>;
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Component />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Component />, container);
 
     expect(log).toEqual(['didMount0']);
 
@@ -322,51 +318,50 @@ describe('TransitionGroup', function () {
   });
 
   it('should handle enter and leave at the same time correctly', function () {
-    var log = [];
+    let log = [];
 
-    var Child = createReactClass({
-      componentDidMount: function () {
+    class Child extends React.Component {
+      componentDidMount() {
         log.push('didMount' + this.props.id);
-      },
-      componentWillUnmount: function () {
+      }
+      componentWillUnmount() {
         log.push('willUnmount' + this.props.id);
-      },
-      componentWillEnter: function (cb) {
+      }
+      componentWillEnter = (cb) => {
         log.push('willEnter' + this.props.id);
         cb();
-      },
-      componentDidEnter: function () {
+      };
+      componentDidEnter = () => {
         log.push('didEnter' + this.props.id);
-      },
-      componentWillLeave: function (cb) {
+      };
+      componentWillLeave = (cb) => {
         log.push('willLeave' + this.props.id);
         cb();
-      },
-      componentDidLeave: function () {
+      };
+      componentDidLeave = () => {
         log.push('didLeave' + this.props.id);
-      },
-      render: function () {
+      };
+      render() {
         return <span />;
-      },
-    });
+      }
+    }
 
-    var Component = createReactClass({
-      getInitialState: function () {
-        return {elements: [0, 1]};
-      },
-      render: function () {
-        var children = [];
-        for (var i = 0; i < this.state.elements.length; i++) {
+    class Component extends React.Component {
+      state = {elements: [0, 1]};
+
+      render() {
+        const children = [];
+        for (let i = 0; i < this.state.elements.length; i++) {
           children.push(
             <Child key={this.state.elements[i]} id={this.state.elements[i]} />
           );
         }
         return <TransitionGroup>{children}</TransitionGroup>;
-      },
-    });
+      }
+    }
 
-    var container = document.createElement('div');
-    var instance = ReactDOM.render(<Component />, container);
+    const container = document.createElement('div');
+    const instance = ReactDOM.render(<Component />, container);
 
     expect(log).toEqual(['didMount0', 'didMount1']);
 
@@ -379,5 +374,4 @@ describe('TransitionGroup', function () {
       'didLeave0', 'didLeave1',
     ]);
   });
-
 });

@@ -1,18 +1,18 @@
 /*eslint-disable no-console */
 
-var browserify = require('browserify');
-var connect = require('gulp-connect');
-var merge = require('merge-stream');
-var notify = require('gulp-notify');
-var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var gutil = require('gulp-util');
-var source = require('vinyl-source-stream');
-var streamify = require('gulp-streamify');
-var uglify = require('gulp-uglify');
-var watchify = require('watchify');
+const browserify = require('browserify');
+const connect = require('gulp-connect');
+const merge = require('merge-stream');
+const notify = require('gulp-notify');
+const gulp = require('gulp');
+const gulpif = require('gulp-if');
+const gutil = require('gulp-util');
+const source = require('vinyl-source-stream');
+const streamify = require('gulp-streamify');
+const uglify = require('gulp-uglify');
+const watchify = require('watchify');
 
-var files = {
+const files = {
   dependencies: [
     'react',
     'react-dom',
@@ -25,9 +25,8 @@ var files = {
   ],
 };
 
-var browserifyTask = function (options) {
-
-  var bundler = browserify({
+const browserifyTask = function (options) {
+  let bundler = browserify({
     entries: [options.src],
     transform: [
       ['babelify', {
@@ -43,8 +42,8 @@ var browserifyTask = function (options) {
     extensions: ['.js', '.jsx', '.json'],
   });
 
-  var rebundle = function () {
-    var start = Date.now();
+  const rebundle = function () {
+    const start = Date.now();
     console.log('Building APP bundle');
     return bundler
       .bundle()
@@ -66,17 +65,15 @@ var browserifyTask = function (options) {
   }
 
   return rebundle();
-
 };
 
-var browserifyDepsTask = function (options) {
-
-  var vendorsBundler = browserify({
+const browserifyDepsTask = function (options) {
+  const vendorsBundler = browserify({
     debug: options.development,
     require: files.dependencies,
   });
 
-  var start = new Date();
+  const start = new Date();
   console.log('Building VENDORS bundle');
   return vendorsBundler
     .bundle()
@@ -92,26 +89,25 @@ var browserifyDepsTask = function (options) {
 };
 
 gulp.task('demo', function() {
-
   process.env.NODE_ENV = 'development';
 
-  var browserifyDepsOpt = {
+  const browserifyDepsOpt = {
     development: true,
     src: files.dependencies,
     output: 'vendors.js',
     dest: './demo/build/scripts',
   };
 
-  var browserifyOpt = {
+  const browserifyOpt = {
     development: true,
     src: files.browserify,
     output: 'bundle.js',
     dest: './demo/build/scripts',
   };
 
-  var serverOpt = {
+  const serverOpt = {
     root: './demo',
-    port: 8889,
+    port: 8080,
     livereload: true,
   };
 
@@ -121,5 +117,4 @@ gulp.task('demo', function() {
     browserifyDepsTask(browserifyDepsOpt),
     browserifyTask(browserifyOpt)
   );
-
 });
